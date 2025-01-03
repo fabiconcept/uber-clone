@@ -12,17 +12,17 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
-    SpaceMonoBold: require('../assets/fonts/PlusJakartaSans-Bold.ttf'),
-    SpaceMonoSemiBold: require('../assets/fonts/PlusJakartaSans-SemiBold.ttf'),
-    SpaceMonoMedium: require('../assets/fonts/PlusJakartaSans-Medium.ttf'),
-    SpaceMonoLight: require('../assets/fonts/PlusJakartaSans-Light.ttf'),
-    SpaceMonoExtraBold: require('../assets/fonts/PlusJakartaSans-ExtraBold.ttf'),
-    SpaceMonoExtraLight: require('../assets/fonts/PlusJakartaSans-ExtraLight.ttf'),
-    SpaceMonoBoldItalic: require('../assets/fonts/PlusJakartaSans-BoldItalic.ttf'),
-    SpaceMonoItalic: require('../assets/fonts/PlusJakartaSans-Italic.ttf'),
-    SpaceMonoMediumItalic: require('../assets/fonts/PlusJakartaSans-MediumItalic.ttf'),
-    SpaceMonoSemiBoldItalic: require('../assets/fonts/PlusJakartaSans-SemiBoldItalic.ttf'),
+    Jakarta: require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
+    JakartaBold: require('../assets/fonts/PlusJakartaSans-Bold.ttf'),
+    JakartaSemiBold: require('../assets/fonts/PlusJakartaSans-SemiBold.ttf'),
+    JakartaMedium: require('../assets/fonts/PlusJakartaSans-Medium.ttf'),
+    JakartaLight: require('../assets/fonts/PlusJakartaSans-Light.ttf'),
+    JakartaExtraBold: require('../assets/fonts/PlusJakartaSans-ExtraBold.ttf'),
+    JakartaExtraLight: require('../assets/fonts/PlusJakartaSans-ExtraLight.ttf'),
+    JakartaBoldItalic: require('../assets/fonts/PlusJakartaSans-BoldItalic.ttf'),
+    JakartaItalic: require('../assets/fonts/PlusJakartaSans-Italic.ttf'),
+    JakartaMediumItalic: require('../assets/fonts/PlusJakartaSans-MediumItalic.ttf'),
+    JakartaSemiBoldItalic: require('../assets/fonts/PlusJakartaSans-SemiBoldItalic.ttf'),
   });
 
   useEffect(() => {
