@@ -3,6 +3,7 @@ import { onboarding } from '@/constants';
 import { router } from 'expo-router';
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Swiper from 'react-native-swiper';
 
 export default function Onboarding() {
@@ -13,7 +14,7 @@ export default function Onboarding() {
     const isLastSlide = activeIndex === onboarding.length - 1;
 
     return (
-        <View className='h-full flex-1 flex items-center justify-between bg-white'>
+        <SafeAreaView className='h-full flex-1 flex items-center justify-between bg-white'>
             <TouchableOpacity
                 onPress={() => router.replace('/(auth)/sign-up')}
                 className='w-full flex justify-end items-end p-5'
@@ -52,6 +53,6 @@ export default function Onboarding() {
                     }
                 }}
             />
-        </View>
+        </SafeAreaView>
     )
 }
