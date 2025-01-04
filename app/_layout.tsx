@@ -5,12 +5,20 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { Fragment, useEffect } from 'react';
 import 'react-native-reanimated';
-
+import { ClerkProvider, ClerkLoaded } from "@clerk/clerk-expo";
+import { tokenCache } from "@/Lib/Auth";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
+const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  if (!publishableKey) {
+    throw new Error(
+      'Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env',
+    )
+  }
+
   const [loaded] = useFonts({
     Jakarta: require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
     JakartaBold: require('../assets/fonts/PlusJakartaSans-Bold.ttf'),
@@ -36,14 +44,16 @@ export default function RootLayout() {
   }
 
   return (
-    <Fragment>
-      <Stack>
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="(root)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="dark" />
-    </Fragment>
+    <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
+      <ClerkLoaded>
+        <Stack>
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="(root)" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+        <StatusBar style="dark" />
+      </ClerkLoaded>
+    </ClerkProvider>
   );
 }
