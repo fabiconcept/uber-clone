@@ -5,6 +5,9 @@ import RideCard from '@/components/RideCard';
 import { icons, images } from '@/constants';
 import GoogleTextInput from '@/components/GoogleTextInput';
 import Map from '@/components/Map';
+import { useLocationStore } from '@/store';
+import React from 'react';
+import * as Location from 'expo-location';
 
 const recentRides = [
     {
@@ -108,6 +111,36 @@ const recentRides = [
 export default function Home() {
     const { user } = useUser();
     const loading = true;
+
+    const { setUserLocation, setDestinationLocation } = useLocationStore();
+    const [hasLocationPermission, setHasLocationPermission] = React.useState(false);
+
+    React.useEffect(() => {
+        const requestLocation = async () => {
+            const { status } = await Location.requestForegroundPermissionsAsync();
+
+            if (status !== 'granted') {
+                setHasLocationPermission(false);
+                return;
+            }
+
+            const location = await Location.getCurrentPositionAsync();
+            const address = await Location.reverseGeocodeAsync({
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
+            });
+
+            setUserLocation({
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
+                address: `${address[0].name}, ${address[0].region}`,
+            });
+
+            setHasLocationPermission(true);
+
+        }
+        requestLocation();
+    }, []);
 
     const handleSignOut = () => { }
 
