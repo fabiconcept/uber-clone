@@ -69,14 +69,6 @@ export default function Map() {
             });
 
             setMarkers(newMarkers);
-            console.log({
-                markerLat: newMarkers[0].latitude,
-                userLatitude,
-            });
-            console.log({
-                userLongitude,
-                markerLng: newMarkers[0].longitude,
-            });
         }
     }, [userLatitude, userLongitude]);
 

@@ -8,6 +8,7 @@ import Map from '@/components/Map';
 import { useLocationStore } from '@/store';
 import React from 'react';
 import * as Location from 'expo-location';
+import { router } from 'expo-router';
 
 const recentRides = [
     {
@@ -144,14 +145,25 @@ export default function Home() {
 
     const handleSignOut = () => { }
 
-    const handleDestinationPress = () => { }
+    const handleDestinationPress = (location: { latitude: number; longitude: number; address: string }) => {
+        setDestinationLocation(location);
+        router.push('/(root)/find-ride');
+    }
 
     return (
         <SafeAreaView className='flex-1 bg-general-500 px-5'>
             <FlatList
                 data={recentRides?.slice(0, 5)}
                 renderItem={({ item }) => (
-                    <RideCard ride={item} />
+                    <RideCard ride={{
+                        ...item,
+                        user_email: "",
+                        origin_longitude: Number(item.origin_longitude),
+                        origin_latitude: Number(item.origin_latitude),
+                        destination_longitude: Number(item.destination_longitude),
+                        destination_latitude: Number(item.destination_latitude),
+                        fare_price: Number(item.fare_price),
+                    }} />
                 )}
                 keyboardShouldPersistTaps='handled'
                 contentContainerStyle={{
