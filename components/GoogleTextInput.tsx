@@ -57,7 +57,7 @@ export default function GoogleTextInput({
                         shadowColor: '#d4d4d4',
                     },
                     listView: {
-                        backgroundColor: textInputBackgroundColor || 'white',
+                        backgroundColor: 'white',
                         position: 'relative',
                         width: '100%',
                         top: 0,
