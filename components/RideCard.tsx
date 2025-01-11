@@ -39,7 +39,7 @@ export default function RideCard({ ride: {
                                 source={icons.point}
                                 className='w-5 h-5'
                             />
-                            <Text className='text-md font-Jakarta' numberOfLines={1}>{destination_address}</Text>
+                            <Text className='text-md font-Jakarta max-w-[200px] truncate' numberOfLines={1}>{destination_address}</Text>
                         </View>
                     </View>
                 </View>
