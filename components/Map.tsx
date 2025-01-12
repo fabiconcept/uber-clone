@@ -1,11 +1,12 @@
 import { icons } from '@/constants';
 import { useFetch } from '@/Lib/fetch';
-import { calculateRegion, generateMarkersFromData } from '@/Lib/Map';
+import { calculateDriverTimes, calculateRegion, generateMarkersFromData } from '@/Lib/Map';
 import { useDriverStore, useLocationStore } from '@/store';
 import { MarkerData } from '@/types/type';
 import { useEffect, useState } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import MapView, { Marker, PROVIDER_DEFAULT } from 'react-native-maps';
+import MapViewDirections from 'react-native-maps-directions';
 
 export default function Map() {
     const { data: drivers, loading, error } = useFetch<MarkerData[]>('/(api)/driver');
@@ -36,8 +37,18 @@ export default function Map() {
     }, [userLatitude, userLongitude, drivers]);
 
     useEffect(() => {
-        if (markers.length > 0 && destinationLatitude && destinationLongitude) { }
-    }, [drivers]);
+        if (markers.length > 0 && destinationLatitude && destinationLongitude) {
+            calculateDriverTimes({
+                markers,
+                userLatitude,
+                userLongitude,
+                destinationLatitude,
+                destinationLongitude,
+            }).then((driversWithTimes) => {
+                setDrivers(driversWithTimes as MarkerData[]);
+            });
+        }
+    }, [markers, destinationLatitude, destinationLongitude]);
 
     if (loading || !userLatitude || !userLongitude) {
         return (
@@ -64,6 +75,7 @@ export default function Map() {
         destinationLatitude,
         destinationLongitude
     });
+
     return (
         <View
             className='bg-general-100 h-full w-full rounded-2xl overflow-hidden justify-center items-center'
@@ -87,6 +99,32 @@ export default function Map() {
                         image={marker.id === selectedDriver ? icons.selectedMarker : icons.marker}
                     />
                 ))}
+                {destinationLatitude && destinationLongitude && (
+                    <>
+                        <Marker
+                            key='destination'
+                            coordinate={{
+                                latitude: destinationLatitude,
+                                longitude: destinationLongitude
+                            }}
+                            title='Destination'
+                            image={icons.pin}
+                        />
+                        <MapViewDirections
+                            origin={{
+                                latitude: userLatitude,
+                                longitude: userLongitude
+                            }}
+                            destination={{
+                                latitude: destinationLatitude,
+                                longitude: destinationLongitude
+                            }}
+                            apikey={process.env.EXPO_PUBLIC_GOOGLE_API_KEY!}
+                            strokeWidth={5}
+                            strokeColor='#0286ff'
+                        />
+                    </>
+                )}
             </MapView>
         </View>
     )
