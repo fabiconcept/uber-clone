@@ -44,7 +44,7 @@ export default function Onboarding() {
             </Swiper>
             <CustomButton
                 title={isLastSlide ? 'Get Started' : 'Next'}
-                className='w-11/12 mt-10'
+                className='w-11/12 mt-10 mb-3'
                 onPress={() => {
                     if (isLastSlide) {
                         router.replace('/(auth)/sign-up');
